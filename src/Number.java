@@ -4,11 +4,22 @@
  */
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import java.util.Arrays;
 
 
 public class Number implements Menu{
@@ -73,23 +84,73 @@ public class Number implements Menu{
     }
 
     @Override
-    public void searchNumber(int number) {
+    public void searchNumber(int number,String path) {
 
-        int size = getListNumber().size();
-        boolean find = false;
-        int counter = 0;
-        for (int i = 0; i < size; i++) {
-            if(getListNumber().get(i)==number){
-                counter++;
-            };
-        }
-        System.out.println("Existe: "+getListNumber().contains(number));
-        System.out.println("Ocurrencias: "+counter);
+        try {
+            FileReader fr = new FileReader(path);
+            BufferedReader br = new BufferedReader(fr);
+            String line = br.readLine().replace(" ", "").replace("[", "").replace("]", "");
+            
+            for (int i = 0; i < line.length(); i++) {
+                System.out.println("ACTUAL : "+line.charAt(i)+"   "+"es igual: "+line.charAt(i)=="2");
+            }
+            
+            System.out.println("Resultado : "+line);
+            
+            
+        } catch (Exception err) {
+            System.out.println("Error al leer el archivo "+err); 
+        }        
+        
     }
 
     @Override
     public void showNumbers() {
         System.out.println("Lista de números: "+getListNumber());
     }
+    
+    @Override
+    public String createFile(String name){
+        
+        File file = new File(name+".txt");
+        String path="";
+        try {
+            if(file.createNewFile()){
+                path=file.getCanonicalPath();
+                System.out.println("Se ha creado el archivo "+name+" en la ruta: "+path);
+            }
+        } catch (Exception err) {
+            System.out.println("Error al crear el archivo "+err); 
+        };
+        return path;
+        
+    };
+    
+    @Override
+    public void readFile(String path){
+        
+        try {
+            FileReader fr = new FileReader(path);
+            BufferedReader br = new BufferedReader(fr);
+            
+            String line = br.readLine();
+            System.out.println("El archivo contiene: "+line);
+        } catch (Exception err) {
+            System.out.println("Error al leer el archivo "+err); 
+        }
+    };
+    
+    @Override
+    public void writeFile(String path,List list){
+        
+        try{
+            FileWriter fw = new FileWriter(path);
+            fw.write(list.toString());
+            fw.close();
+            System.out.println("------ Escritura completada ------");
+        }catch(Exception err){
+            System.out.println("Error al escribir en el archivo "+err); 
+        }
+    };
     
 }
