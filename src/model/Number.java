@@ -1,48 +1,31 @@
+package model;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import java.util.Arrays;
 
 
-public class Number implements Menu{
+
+public class Number{
     
-    private int number;
     private List<Integer> listNumber;
     
     public Number(){
-        this.number=0;
         this.listNumber=new ArrayList<Integer>();
     }
     
-    public Number(int number, List<Integer> listNumber) {
-        this.number = number;
+    public Number(List<Integer> listNumber) {
         this.listNumber = listNumber;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public List<Integer> getListNumber() {
@@ -52,13 +35,7 @@ public class Number implements Menu{
     public void setListNumber(List<Integer> listNumber) {
         this.listNumber = listNumber;
     }
-
-    @Override
-    public String toString() {
-        return "Number{" + "number=" + number + ", listNumber=" + listNumber + '}';
-    }
-
-    @Override
+    
     public List<Integer> randomNumber(int number) {
         Random random = new Random();
         
@@ -72,44 +49,38 @@ public class Number implements Menu{
         return randomList;
     }
 
-    @Override
-    public void saveNumbers() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public void orderNumbers() {
         getListNumber().sort(Comparator.naturalOrder());
-        System.out.println("Lista ordenada");
+        
     }
 
-    @Override
-    public void searchNumber(int number,String path) {
-
+    public boolean searchNumber(int number,String path) {
+        
+        boolean result=false;
+        
         try {
             FileReader fr = new FileReader(path);
             BufferedReader br = new BufferedReader(fr);
-            String line = br.readLine().replace(" ", "").replace("[", "").replace("]", "");
+            List<Integer> listNumber = new ArrayList<Integer>();
+            //Leer archivo
+            String line=br.readLine();
             
-            for (int i = 0; i < line.length(); i++) {
-                System.out.println("ACTUAL : "+line.charAt(i)+"   "+"es igual: "+line.charAt(i)=="2");
+            //Arreglo de string eliminando espacios y []
+            String[] arrString = line.replaceAll("\\[", "").replaceAll("]", "").replace(" ", "").split(",");
+            
+            //Parsear string a entero y pasarlo a la lista
+            for (int i = 0; i < arrString.length; i++) {
+                listNumber.add(Integer.parseInt(arrString[i]));
             }
             
-            System.out.println("Resultado : "+line);
-            
-            
+            result=listNumber.contains(number);
         } catch (Exception err) {
             System.out.println("Error al leer el archivo "+err); 
         }        
         
-    }
-
-    @Override
-    public void showNumbers() {
-        System.out.println("Lista de números: "+getListNumber());
+        return result;
     }
     
-    @Override
     public String createFile(String name){
         
         File file = new File(name+".txt");
@@ -117,7 +88,6 @@ public class Number implements Menu{
         try {
             if(file.createNewFile()){
                 path=file.getCanonicalPath();
-                System.out.println("Se ha creado el archivo "+name+" en la ruta: "+path);
             }
         } catch (Exception err) {
             System.out.println("Error al crear el archivo "+err); 
@@ -126,28 +96,28 @@ public class Number implements Menu{
         
     };
     
-    @Override
-    public void readFile(String path){
+    public String readFile(String path){
         
+        String result="";
         try {
             FileReader fr = new FileReader(path);
             BufferedReader br = new BufferedReader(fr);
             
-            String line = br.readLine();
-            System.out.println("El archivo contiene: "+line);
+            String line = br.readLine();    
+            result=line;
         } catch (Exception err) {
             System.out.println("Error al leer el archivo "+err); 
         }
+        
+        return result;
     };
     
-    @Override
     public void writeFile(String path,List list){
         
         try{
             FileWriter fw = new FileWriter(path);
             fw.write(list.toString());
             fw.close();
-            System.out.println("------ Escritura completada ------");
         }catch(Exception err){
             System.out.println("Error al escribir en el archivo "+err); 
         }
