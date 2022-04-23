@@ -6,4 +6,4 @@ El programa ordena la lista de números que está almacenada en clase Number y l
 El programa lee el archivo creado y obtiene un string representando la lista almacenada, dicho string es transformado a una Lista de tipo Integer la cual luego es recorrida para validar si el parámetro dado (número a buscar) es igual al valor dentro de la lista.<br/>
 El programa muestra los números del archivo.<br/>
 El programa presenta las mismas funcionalidades nombradas anteriormente en la interfaz gráfica.<br/>
-# **PD: Al momento de leer un archivo en la interfaz gráfica, si dicha lista es muy grande, se abrirá una ventana mostrando la lista extendiendose según la cantidad de valores encontrados.**<br/>
+##### **PD: Al momento de leer un archivo en la interfaz gráfica, si dicha lista es muy grande, se abrirá una ventana mostrando la lista extendiendose según la cantidad de valores encontrados.**<br/>
