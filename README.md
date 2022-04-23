@@ -7,3 +7,7 @@ El programa lee el archivo creado y obtiene un string representando la lista alm
 El programa muestra los números del archivo.<br/>
 El programa presenta las mismas funcionalidades nombradas anteriormente en la interfaz gráfica.<br/>
 ##### **PD: Al momento de leer un archivo en la interfaz gráfica, si dicha lista es muy grande, se abrirá una ventana mostrando la lista extendiendose según la cantidad de valores encontrados.**<br/>
+
+Product Version: Apache NetBeans IDE 13
+Java: 11.0.13; OpenJDK 64-Bit Server VM 11.0.13+8
+Runtime: OpenJDK Runtime Environment 11.0.13+8
